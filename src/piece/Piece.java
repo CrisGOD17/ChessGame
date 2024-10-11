@@ -6,15 +6,18 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import main.Board;
 import main.GamePanel;
+import main.Type;
 
 public class Piece {
 
+	public Type type;
 	public BufferedImage image;
 	public int x, y;
 	public int col, row, preCol, preRow;
 	public int color;
 	public Piece hittingP;
-	public boolean moved;
+	public boolean moved, twoStepped;
+	
 
 	public Piece(int color, int col, int row) {
 
@@ -69,6 +72,12 @@ public class Piece {
 	}
 
 	public void updatePosition() {
+		// revisar el paso del peon sin ver
+		if(type == Type.PAWN) {
+			if(Math.abs(row - preRow) == 2) {
+				twoStepped = true;
+			}
+		}
 		
 		x = getX(col);
 		y = getY(row);
@@ -76,6 +85,7 @@ public class Piece {
 		preRow = getRow(y);
         moved= true;
 		
+        
 	}
 
 	public void resetPosition() {
